@@ -28,15 +28,31 @@ const Dashboard = () => {
             <NavLink to="/">Home</NavLink>
           </li>
           {user ? (
-            <li>
-              <NavLink onClick={() => signOut(auth)} to="/login">
-                Logout
-              </NavLink>
-            </li>
+            <>
+              <li>
+                <NavLink to="/admin">Admin</NavLink>
+              </li>
+              <li>
+                <NavLink to="/sickertAdmin">Company Sickert</NavLink>
+              </li>
+              <li>
+                <NavLink to="/Moderator">Moderator</NavLink>
+              </li>
+              <li>
+                <NavLink to="/publicUser">Normal User</NavLink>
+              </li>
+              <li>
+                <NavLink onClick={() => signOut(auth)} to="/login">
+                  Logout
+                </NavLink>
+              </li>
+            </>
           ) : (
-            <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
+            <>
+              <li>
+                <NavLink to="/login">Login</NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>
