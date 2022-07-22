@@ -11,6 +11,7 @@ import Admin from "./Component/src/Admin";
 import AllUser from "./Component/src/AllUser";
 import CompanySicreat from "./Component/src/CompanySicreat";
 import Moderator from "./Component/src/Moderator";
+import TotalUser from "./Component/src/TotalUser";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/sickertAdmin" element={<CompanySicreat />} />
           <Route path="/moderator" element={<Moderator />} />
           <Route path="/publicUser" element={<AllUser />} />
+          <Route path="/totalUser" element={<TotalUser />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>

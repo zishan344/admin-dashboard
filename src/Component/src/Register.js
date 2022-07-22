@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../src/firebase.init";
+import useToken from "./Hook/userToken";
 import Loading from "./Loading";
 
 const Register = () => {
@@ -19,6 +20,7 @@ const Register = () => {
     useCreateUserWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(auth);
+  const [token] = useToken(guser || Ruser);
   const {
     register,
     formState: { errors },
@@ -27,7 +29,7 @@ const Register = () => {
   console.log(Ruser);
   const navigate = useNavigate();
   if (guser || Ruser) {
-    navigate("/home");
+    navigate("/");
   }
   let mrError;
   if (gerror || Rerror || Uerror) {

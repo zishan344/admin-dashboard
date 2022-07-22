@@ -5,11 +5,18 @@ import { VscThreeBars } from "react-icons/vsc";
 import { NavLink, Outlet } from "react-router-dom";
 import auth from "../../firebase.init";
 const Dashboard = () => {
+  // const [total, setTotal] = useState([]);
   const [user, loading, error] = useAuthState(auth);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/user")
+  //     .then((res) => res.json())
+  //     .then((data) => setTotal(data));
+  // }, []);
+
   return (
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
+      <div className="drawer-content ">
         {/* <!-- Page content here --> */}
         <Outlet />
 
@@ -37,6 +44,9 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="/Moderator">Moderator</NavLink>
+              </li>
+              <li>
+                <NavLink to="/totaluser">Total User</NavLink>
               </li>
               <li>
                 <NavLink to="/publicUser">Normal User</NavLink>

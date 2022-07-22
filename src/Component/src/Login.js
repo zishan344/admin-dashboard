@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../src/firebase.init";
+import useToken from "./Hook/userToken";
 import Loading from "./Loading";
 
 const Login = () => {
@@ -17,7 +18,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(auth);
-
+  const [token] = useToken(guser || Luser);
   const {
     register,
     formState: { errors },
@@ -118,7 +119,7 @@ const Login = () => {
                 </span>
               </label>
               <span className="">
-                New to autovantis{" "}
+                New user{" "}
                 <Link className="underline text-blue-500" to="/register">
                   Register
                 </Link>
