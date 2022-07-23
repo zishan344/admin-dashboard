@@ -60,10 +60,10 @@ const Moderator = () => {
               <td>{user?.email}</td>
               <td>{user?.role}</td>
               <td>
-                {" "}
                 <button
                   className="btn btn-xs"
                   onClick={() => removeRole(user?.email)}
+                  disabled={user.role == "Moderator"}
                 >
                   Remove Moderator
                 </button>
