@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Admin = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/user")
+    fetch("https://immense-oasis-81446.herokuapp.com/user")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);

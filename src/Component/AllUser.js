@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 const AllUser = () => {
   // const [users, setUsers] = useState([]);
   // useEffect(() => {
-  //   fetch("http://localhost:5000/user")
+  //   fetch("https://immense-oasis-81446.herokuapp.com/user")
   //     .then((res) => res.json())
   //     .then((data) => setUsers(data));
   // }, []);
@@ -13,7 +13,9 @@ const AllUser = () => {
     error,
     data: users,
   } = useQuery(["repoData"], () =>
-    fetch("http://localhost:5000/user").then((res) => res.json())
+    fetch("https://immense-oasis-81446.herokuapp.com/user").then((res) =>
+      res.json()
+    )
   );
   console.log(users);
   if (isLoading) return "Loading...";

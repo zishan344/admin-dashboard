@@ -5,7 +5,7 @@ const useToken = (user) => {
   useEffect(() => {
     const currentUser = user?.user?.email;
     if (user) {
-      fetch(`http://localhost:5000/user/${currentUser}`, {
+      fetch(`https://immense-oasis-81446.herokuapp.com/user/${currentUser}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

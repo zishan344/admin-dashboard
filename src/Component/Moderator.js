@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 const Moderator = () => {
   // const [users, setUsers] = useState([]);
   // useEffect(() => {
-  //   fetch("http://localhost:5000/user")
+  //   fetch("https://immense-oasis-81446.herokuapp.com/user")
   //     .then((res) => res.json())
   //     .then((data) => setUsers(data));
   // }, []);
@@ -14,7 +14,9 @@ const Moderator = () => {
     data: users,
     refetch,
   } = useQuery(["repoData"], () =>
-    fetch("http://localhost:5000/user").then((res) => res.json())
+    fetch("https://immense-oasis-81446.herokuapp.com/user").then((res) =>
+      res.json()
+    )
   );
 
   if (isLoading) return "Loading...";
@@ -24,10 +26,13 @@ const Moderator = () => {
     if (!confirm) {
       return;
     }
-    fetch(`http://localhost:5000/users/removeRole/${email}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://immense-oasis-81446.herokuapp.com/users/removeRole/${email}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         refetch();

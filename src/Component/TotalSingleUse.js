@@ -7,10 +7,13 @@ const TotalSingleUse = ({ user, index, refetch }) => {
     if (!confirm) {
       return;
     }
-    fetch(`http://localhost:5000/users/makeAdmin/${email}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://immense-oasis-81446.herokuapp.com/users/makeAdmin/${email}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         refetch();
@@ -22,10 +25,13 @@ const TotalSingleUse = ({ user, index, refetch }) => {
     if (!confirm) {
       return;
     }
-    fetch(`http://localhost:5000/users/makeModerator/${email}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://immense-oasis-81446.herokuapp.com/users/makeModerator/${email}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         refetch();

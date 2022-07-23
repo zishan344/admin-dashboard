@@ -6,7 +6,7 @@ const useVerify = (user) => {
   useEffect(() => {
     if (user) {
       const email = user?.email;
-      fetch(`http://localhost:5000/verifyAdmin/${email}`)
+      fetch(`https://immense-oasis-81446.herokuapp.com/verifyAdmin/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setVerify(data?.role);
