@@ -49,6 +49,7 @@ const Moderator = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Remove Role</th>
           </tr>
         </thead>
         <tbody>
