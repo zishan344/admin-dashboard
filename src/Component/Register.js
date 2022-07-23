@@ -1,60 +1,82 @@
 import React, { useState } from "react";
 import {
+  useCreateUserWithEmailAndPassword,
   useSendPasswordResetEmail,
-  useSignInWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import auth from "../../../src/firebase.init";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../firebase.init";
 import useToken from "./Hook/userToken";
 import Loading from "./Loading";
 
-const Login = () => {
+const Register = () => {
+  const [displayName, setDisplayName] = useState("");
   const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, Luser, Lloading, Lerror] =
-    useSignInWithEmailAndPassword(auth);
-  const [email, setEmail] = useState("");
+  const [updateProfile, updating, Uerror] = useUpdateProfile(auth);
+
+  const [createUserWithEmailAndPassword, Ruser, Rloading, Rerror] =
+    useCreateUserWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(auth);
-  const [token] = useToken(guser || Luser);
+  const [token] = useToken(guser || Ruser);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  let location = useLocation();
-  let from = location.state?.from?.pathname || "/";
+  console.log(Ruser);
   const navigate = useNavigate();
-
-  if (guser || Luser) {
-    navigate(from, { replace: true });
+  if (guser || Ruser) {
+    navigate("/");
   }
-
   let mrError;
-  if (gerror || Lerror) {
+  if (gerror || Rerror || Uerror) {
     mrError = (
-      <p className="mt-3 text-red-500">{gerror?.message || Lerror?.message}</p>
+      <p className="mt-3 text-red-500">
+        {gerror?.message || Rerror?.message || Uerror.message}
+      </p>
     );
   }
-
-  const onSubmit = (data) => {
-    const { email, password } = data;
-    signInWithEmailAndPassword(email, password);
-  };
-  if (gloading || Lloading) {
+  if (gloading || Rloading || Uerror) {
     return <Loading />;
   }
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName });
+  };
   return (
     <div className="flex justify-center py-4 bg-base-100">
-      <div className="card w-[700px] bg-base-100">
+      <div className="card w-[700px] shadow-md bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl text-center font-bold text-secondary">
-            {" "}
-            Login An Account
+            Register An Account
           </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-full max-w-xl">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "name is required",
+                  },
+                })}
+                type="text"
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Name"
+                className="input input-bordered w-full max-w-xl"
+              />
+              <label className="label">
+                {errors?.name?.type === "required" && (
+                  <span className="text-red-500">{errors.name.message}</span>
+                )}
+              </label>
+            </div>
             <div className="form-control w-full max-w-xl">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -71,7 +93,6 @@ const Login = () => {
                   },
                 })}
                 type="email"
-                onBlur={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 className="input input-bordered w-full max-w-xl"
               />
@@ -105,36 +126,26 @@ const Login = () => {
                     {errors.password.message}
                   </span>
                 )}
-                <span
-                  onClick={async () => {
-                    if (!email) {
-                      return toast.error("input a valid email");
-                    }
-                    await sendPasswordResetEmail(email);
-                    toast.success("send email successfully");
-                  }}
-                  className="label-text-alt text-blue-500 link link-hover"
-                >
-                  Forgot password?
-                </span>
               </label>
+
               <span className="">
-                New user{" "}
-                <Link className="underline text-blue-500" to="/register">
-                  Register
+                Already have an account{" "}
+                <Link className="underline text-blue-500" to="/login">
+                  Login
                 </Link>
               </span>
+              {mrError}
             </div>
-            {mrError}
-            <div className="form-control w-[40%] mt-6  ">
-              <button type="submit" className="btn btn-secondary">
-                Login
+
+            <div className="form-control mt-6 text-center ">
+              <button type="submit" className="btn btn-secondary w-[40%]">
+                Register
               </button>
             </div>
           </form>
         </div>
         <div className="divider px-2">OR</div>
-        <div className="text-center  px-6 mb-4">
+        <div className="px-6 w-full text-center mb-4">
           <button
             onClick={() => signInWithGoogle()}
             className="btn btn-outline btn-secondary"
@@ -147,4 +158,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

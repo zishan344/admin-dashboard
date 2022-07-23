@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 
 const AllUser = () => {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5000/user")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-  }, []);
+  // const [users, setUsers] = useState([]);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/user")
+  //     .then((res) => res.json())
+  //     .then((data) => setUsers(data));
+  // }, []);
+  const {
+    isLoading,
+    error,
+    data: users,
+  } = useQuery(["repoData"], () =>
+    fetch("http://localhost:5000/user").then((res) => res.json())
+  );
+  console.log(users);
+  if (isLoading) return "Loading...";
   const normal = users.filter(
     (user) => user?.role != "Admin" && user?.role != "Moderator"
   );
   return (
-    <div class="overflow-x-auto">
-      <table class="table table-zebra w-full">
+    <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         {/* <!-- head --> */}
         <thead>
           <tr>
@@ -28,7 +38,7 @@ const AllUser = () => {
               <th>{index + 1}</th>
               <td>{user?.name}</td>
               <td>{user?.email}</td>
-              <td>{user?.role}</td>
+              <td>{user?.role ? user?.role : "User"}</td>
             </tr>
           ))}
         </tbody>

@@ -1,8 +1,7 @@
 import React from "react";
 
-const TotalSingleUse = ({ user, index }) => {
+const TotalSingleUse = ({ user, index, refetch }) => {
   const { email, role, name } = user;
-  console.log(role);
   const makeAdmin = (email) => {
     const confirm = window.confirm("Are you sure you want to make admin");
     if (!confirm) {
@@ -14,6 +13,7 @@ const TotalSingleUse = ({ user, index }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        refetch();
         console.log(data);
       });
   };
@@ -28,6 +28,7 @@ const TotalSingleUse = ({ user, index }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        refetch();
         console.log(data);
       });
   };
